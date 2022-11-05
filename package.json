@@ -1,0 +1,27 @@
+{
+  "name": "interaction",
+  "version": "1.0.0",
+  "description": "this is a student interaction website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ritik jha",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.30.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.2",
+    "nodemailer": "^6.7.7",
+    "nodemailer-express-handlebars": "^5.0.0",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7",
+    "two-step-auth": "^1.1.2"
+  }
+}
