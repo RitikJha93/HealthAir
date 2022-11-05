@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const connectDB = require('./db/db');
 const userRoutes = require('./routes/userRoutes')
 const doctorRoutes = require('./routes/doctorRoutes')
+const symptomRoutes = require('./routes/symptomRoutes')
 const fileUpload = require('express-fileupload')
 
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(fileUpload({
 }))
 app.use('/api/user',userRoutes)
 app.use('/api/doctor',doctorRoutes)
+app.use('/api/symptom',symptomRoutes)
 
 app.get('/',(req,res)=>{
     res,send("Hello World")

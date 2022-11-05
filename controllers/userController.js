@@ -119,19 +119,27 @@ const forgotPassChange = asyncHandler(async (req, res) => {
   var salt = bcrypt.genSaltSync(10);
   try {
     await User.findByIdAndUpdate(
-      { _id:id },
+      { _id: id },
       { password: bcrypt.hashSync(password, salt) },
       (err, result) => {
         if (err) {
           res.status(400).json({ error: "Some error Ocurred" });
-          console.log(err)
-        }
-        else{
-            res.status(200).send(result)
+          console.log(err);
+        } else {
+          res.status(200).send(result);
         }
       }
     );
   } catch (err) {}
+});
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  try {
+    const foundUsers = await User.find();
+    res.status(200).send(foundUsers);
+  } catch (error) {
+    res.status(400).json({ error: "Some error occurred" });
+  }
 });
 const forgotPassOtp = () => {
   return otp;
@@ -142,4 +150,5 @@ module.exports = {
   forgotpass,
   forgotPassOtp,
   forgotPassChange,
+  getAllUsers
 };
