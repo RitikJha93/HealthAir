@@ -14,4 +14,5 @@ router.post('/login',authUser)
 router.post('/forgotPass',forgotpass)
 router.post('/forgotPassOtpValidator',forgotPassOtpValidator,)
 router.post('/forgotPassChange',forgotPassChange)
+
 module.exports = router
