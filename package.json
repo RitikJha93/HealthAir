@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "this is a student interaction website",
   "main": "index.js",
+  "engines": {"node" : "16.16.0"},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "author": "ritik jha",
   "license": "ISC",
