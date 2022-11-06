@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/HomePage.dart';
+import 'package:healthcare/emailLogin.dart';
+import 'package:http/http.dart' as http;
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);
@@ -10,6 +14,25 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  int? otp;
+  Future<dynamic> checkOTP() async {
+    Map<String, String> header = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json'
+    };
+    try {
+      var response = await http.post(
+          Uri.parse('https://health-care-backend.vercel.app/api/user/validate/'),
+          headers: header,
+          body:
+          jsonEncode({ "userOTP": otp}));
+      // body=jsonDecode(response.body);
+      // print(response.body);
+      return (response.statusCode);
+    } catch (e) {
+      // print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -35,6 +58,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     // otp=int.parse(value);
+                    setState(() {
+                      otp=int.parse(value);
+                    });
                   },
                   decoration: const InputDecoration(
                     border: InputBorder.none,
@@ -51,8 +77,14 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: () {}, child: AutoSizeText('Resend OTP')),
               ),
             ),
-            ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>HomePage()));
+            ElevatedButton(onPressed: ()async{
+              if(otp!=null||otp!=''){
+                var res=await checkOTP();
+                if(res!=201){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const EmailLogin(isDoctor: false, link: 'https://health-care-backend.vercel.app/api/user/login')));
+                }
+              }
+              // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>HomePage()));
             }, child: AutoSizeText('Submit'))
           ],
         ),

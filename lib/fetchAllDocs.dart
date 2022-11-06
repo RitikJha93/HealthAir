@@ -58,6 +58,7 @@ class _FetchAllDocsState extends State<FetchAllDocs> {
                               qualification: allDocs[index]['qualification'],
                               specialization: allDocs[index]['specialization'],
                               name: allDocs[index]['name'],
+                              docKaId: allDocs[index]['_id'],
                               currentLocation: allDocs[index]
                                   ['currentLocation'])));
                 },

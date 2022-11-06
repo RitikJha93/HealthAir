@@ -83,7 +83,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigator.push(context, MaterialPageRoute(builder: >)
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const EmailLogin(isDoctor: true,link: '',)));
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const EmailLogin(isDoctor: true,link: 'https://health-care-backend.vercel.app/api/doctor/loginDoctor',)));
                         },
                         style: ButtonStyle(
                             backgroundColor:

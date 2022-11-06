@@ -1,4 +1,6 @@
 // import 'package:adv_egg/patient_login.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:healthcare/otpPage.dart';
 import 'package:http/http.dart' as http;
@@ -12,15 +14,28 @@ class RegScreen extends StatefulWidget {
 }
 
 class _RegScreenState extends State<RegScreen> {
+  var res;
   Future regUser()async{
-    final url='http://192.168.144.74:5000/api/user/';
+    final url='https://health-care-backend.vercel.app/api/user/';
+    Map<String, String> header = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      // 'Authorization': 'Bearer $token'
+    };
     try{
-
+      final respo=await http.post(Uri.parse(url),headers:header,body: jsonEncode(
+          {'name':name,'email':email,'password':password}));
+      if(respo!=200){
+      }
+      // print(respo.body);
+      return respo.statusCode;
     }catch(err){
+      print('madarchodddddddd');
       print(err);
     }
   }
   String? email;
+  String? name;
   String? password;
   @override
   Widget build(BuildContext context) {
@@ -65,9 +80,11 @@ class _RegScreenState extends State<RegScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     textAlign: TextAlign.start,
-                    obscureText: true,
+                    obscureText: false,
                     onChanged: (value) {
-                      email = value;
+                      setState(() {
+                        email=value;
+                      });
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -101,9 +118,11 @@ class _RegScreenState extends State<RegScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     textAlign: TextAlign.start,
-                    obscureText: true,
+                    obscureText: false,
                     onChanged: (value) {
-                      email = value;
+                      setState(() {
+                        name=value;
+                      });
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -139,7 +158,9 @@ class _RegScreenState extends State<RegScreen> {
                     textAlign: TextAlign.start,
                     obscureText: true,
                     onChanged: (value) {
-                      email = value;
+                      setState(() {
+                        password=value;
+                      });
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -154,51 +175,20 @@ class _RegScreenState extends State<RegScreen> {
                   ),
                 ),
               ),
-
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Confirm Password',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ),
-              ),
-              Material(
-                // elevation: 20,
-                color: Colors.transparent,
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    textAlign: TextAlign.start,
-                    obscureText: true,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-
-                      //   hintStyle: TextStyle(color:Colors.black),
-                      hintText: 'Enter your password',
-                      // icon: Icon(Icons.lock)
-                    ),
-                    style: const TextStyle(
-                      // color:Colors.white
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: size.height*0.05,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
+                      if((name!=''||name!=null)&&(email!=''||email!=null)&&(password!=''||password!=null)){
+                        var resp=await regUser();
+                        if(resp==200){
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>OtpScreen()));
+                        }
+                      }
                       // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const PatientLogin()));
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>OtpScreen()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>OtpScreen()));
                     },
                     style: ButtonStyle(
                         backgroundColor:
