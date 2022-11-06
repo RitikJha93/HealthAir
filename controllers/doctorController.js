@@ -93,4 +93,25 @@ const getAllDoctors = asyncHandler(async (req, res) => {
     res.status(400).json({error:"Some error occurred"})
   }
 });
-module.exports = { authDoctor, registerDoctor,getAllDoctors };
+
+const filterDoctors = async(req,res)=>{
+  const {final_prediction} = req.body
+  let array = []
+  let filter
+  for (const [key, value] of Object.entries(final_prediction)) {
+    console.log(key)
+    filter = await Doctor.find({specialization:key})
+    if(filter.length != 0){
+      res.status(200).send(filter)
+      break
+    }
+    else{
+      continue
+    }
+  }
+
+
+
+  
+}
+module.exports = { authDoctor, registerDoctor,getAllDoctors,filterDoctors };
